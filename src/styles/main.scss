@@ -1,0 +1,35 @@
+@use "./mixins";
+@use "./variables";
+
+@use "./components/header";
+@use "./components/carousel";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  font-family: variables.$font-family;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  color: variables.$text-color;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  background-color: variables.$background-color;
+  font-size: variables.$font-size-base;
+}
+
+h1 {
+  text-align: center;
+}
+
+a {
+  @include mixins.no-hyperlink-style;
+}
