@@ -4,6 +4,8 @@
 @use "./components/header";
 @use "./components/carousel";
 
+@use "./pages/detailPage";
+
 * {
   margin: 0;
   padding: 0;
@@ -26,10 +28,32 @@ body {
   font-size: variables.$font-size-base;
 }
 
+section {
+  margin: variables.$spacing_xl variables.$spacing_md;
+  @include mixins.responsive(variables.$breakpoint-sm) {
+    max-width: 1064px;
+    margin: variables.$spacing_xl auto;
+  }
+}
+
 h1 {
   text-align: center;
 }
 
+h2 {
+  margin-bottom: variables.$spacing_md;
+}
+
 a {
   @include mixins.no-hyperlink-style;
+}
+
+.cta {
+  padding: 10px 20px;
+  background-color: variables.$accent-color;
+  color: variables.$white-color;
+  text-transform: uppercase;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 }

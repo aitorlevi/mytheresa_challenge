@@ -12,16 +12,21 @@ const ProductCarousel = ({ category }) => {
 
   const responsive = {
     desktop: {
-      breakpoint: { max: 4000, min: 768 },
-      items: 5,
+      breakpoint: { min: 768, max: 5000 },
+      items: 4,
+      slidesToSlide: 4,
     },
     tablet: {
       breakpoint: { max: 768, min: 600 },
-      items: 2,
+      items: 3,
+      slidesToSlide: 3,
+      partialVisibilityGutter: 20,
     },
     mobile: {
       breakpoint: { max: 600, min: 0 },
-      items: 1,
+      items: 2,
+      slidesToSlide: 2,
+      partialVisibilityGutter: 20,
     },
   };
 
@@ -44,47 +49,31 @@ const ProductCarousel = ({ category }) => {
         beforeChange={() => setMouseState({ isMoving: true })}
         afterChange={() => setMouseState({ isMoving: false })}
         responsive={responsive}
-        additionalTransfrom={0}
-        arrows
-        autoPlaySpeed={3000}
-        centerMode={false}
-        className=""
-        containerClass="container-with-dots"
-        dotListClass=""
-        draggable
-        minimumTouchDrag={50}
-        focusOnSelect={false}
         infinite
-        itemClass=""
-        renderArrowsWhenDisabled={false}
-        renderButtonGroupOutside={false}
-        renderDotsOutside={false}
-        rewind={false}
-        rewindWithAnimation={false}
-        rtl={false}
-        shouldResetAutoplay
-        showDots={false}
-        sliderClass=""
-        slidesToSlide={5}
-        swipeable
+        containerClass="carousel-wrapper"
+        removeArrowOnDeviceType={["tablet", "mobile"]}
+        partialVisible={true}
       >
         {movies.map((movie) => (
-          <div key={movie.id}>
-            {/* <Link
+          <div className="movie" key={movie.id}>
+            <Link
+              className="movie-link"
               to={`/details/${movie.id}`}
               onClick={(e) => {
+                // No able to click when carousel is dragging or swiping
                 if (mouseState.isMoving) {
                   e.preventDefault();
                 }
               }}
-            > */}
-            <img
-              src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-              alt={movie.title}
-            />
-            <h3>{movie.title}</h3>
-
-            {/* </Link> */}
+              draggable="false"
+            >
+              <img
+                draggable="false"
+                src={`https://image.tmdb.org/t/p/w300${movie.backdrop_path}`}
+                alt={movie.title}
+              />
+              <h4>{movie.title}</h4>
+            </Link>
           </div>
         ))}
       </Carousel>

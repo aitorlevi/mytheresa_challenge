@@ -1,1 +1,42 @@
 @use "../variables";
+
+.detail-page {
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: variables.$spacing_lg;
+    align-items: stretch;
+
+    .image-vote {
+      position: relative;
+
+      img {
+        width: 100%;
+        display: block;
+      }
+      .vote-average {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        font-size: 2.5rem;
+        z-index: 1;
+        padding: 5px 10px;
+        &.back {
+          background-color: #00000050;
+          color: #ffffffe0;
+        }
+      }
+    }
+
+    .copy-cta {
+      display: flex;
+      flex-direction: column;
+      gap: variables.$spacing_lg;
+
+      .cta {
+        width: 50%;
+        margin: 0 auto;
+      }
+    }
+  }
+}

@@ -2,35 +2,18 @@
 @use "../mixins";
 
 .carousel {
-  margin: variables.$spacing_xl variables.$spacing_md;
-  @include mixins.responsive(variables.$breakpoint-sm) {
-    max-width: 1064px;
-    margin: variables.$spacing_xl auto;
+  .carousel-wrapper {
+    .movie {
+      margin: 0 variables.$spacing_sm;
+      .movie-link {
+        img {
+          width: 100%;
+        }
+        h4 {
+          padding-top: variables.$spacing_sm;
+          text-align: center;
+        }
+      }
+    }
   }
-  h2 {
-    margin-bottom: variables.$spacing_md;
-  }
-
-  //   .carousel-wrapper {
-  //     width: 100%;
-  //     // .movie {
-  //     //   img {
-  //     //     width: calc(50vw - variables.$spacing_md * 1.5);
-  //     //     @include mixins.responsive(variables.$breakpoint-sm) {
-  //     //       max-width: 200px;
-  //     //     }
-  //     //   }
-  //     //   h3 {
-  //     //     padding-top: variables.$spacing_sm;
-  //     //   }
-  //     // }
-  //   }
-  //   .arrows {
-  //     position: relative;
-  //     top: 50%;
-  //     height: 50px;
-  //     font-size: 5rem;
-  //     display: flex;
-  //     justify-content: space-between;
-  //   }
 }
