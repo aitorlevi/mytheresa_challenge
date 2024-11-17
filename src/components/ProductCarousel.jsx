@@ -10,6 +10,18 @@ const ProductCarousel = ({ category }) => {
   const [movies, setMovies] = useState([]);
   const [mouseState, setMouseState] = useState({ isMoving: false });
 
+  useEffect(() => {
+    const fetchMovies = async () => {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/movie/${category}?api_key=${API_KEY}`
+      );
+      const data = await response.json();
+      setMovies(data.results);
+    };
+
+    fetchMovies();
+  }, [category]);
+
   const responsive = {
     desktop: {
       breakpoint: { min: 768, max: 5000 },
@@ -30,18 +42,6 @@ const ProductCarousel = ({ category }) => {
     },
   };
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${category}?api_key=${API_KEY}`
-      );
-      const data = await response.json();
-      setMovies(data.results);
-    };
-
-    fetchMovies();
-  }, [category]);
-
   return (
     <section className="carousel">
       <h2>{category.replace("_", " ").toUpperCase()}</h2>
@@ -59,18 +59,18 @@ const ProductCarousel = ({ category }) => {
             <Link
               className="movie-link"
               to={`/details/${category}/${movie.id}`}
+              draggable="false"
               onClick={(e) => {
                 // No able to click when carousel is dragging or swiping
                 if (mouseState.isMoving) {
                   e.preventDefault();
                 }
               }}
-              draggable="false"
             >
               <img
-                draggable="false"
                 src={`https://image.tmdb.org/t/p/w300${movie.backdrop_path}`}
                 alt={movie.title}
+                draggable="false"
               />
               <h4>{movie.title}</h4>
             </Link>

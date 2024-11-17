@@ -3,11 +3,13 @@ import { useParams } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const POPULAR = import.meta.env.VITE_CATEGORY_POPULAR;
+const TOP_RATED = import.meta.env.VITE_CATEGORY_TOP_RATED;
+const UPCOMING = import.meta.env.VITE_CATEGORY_UPCOMING;
 
 const DetailPage = () => {
-  const { id } = useParams();
+  const { category, id } = useParams();
   const [movie, setMovie] = useState(null);
-  const [stars, setStars] = useState([]);
 
   useEffect(() => {
     console.log("useEffect");
@@ -16,7 +18,6 @@ const DetailPage = () => {
         `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
       );
       const data = await response.json();
-      countStars(data.vote_average);
 
       setMovie(data);
     };
@@ -24,36 +25,68 @@ const DetailPage = () => {
     fetchMovie();
   }, [id]);
 
-  const countStars = (voteAverage) => {
-    let numStars = Math.round(voteAverage * 0.5 * 2) / 2;
-    // setStars([]);
-    for (let i = numStars; i > 0; i--) {
-      i >= 1
-        ? setStars((prevArr) => [...prevArr, true])
-        : setStars((prevArr) => [...prevArr, false]);
+  const switchClassName = () => {
+    switch (category) {
+      case POPULAR:
+        return "popular";
+      case TOP_RATED:
+        return "top-rated";
+      case UPCOMING:
+        return "upcoming";
+      default:
+        break;
     }
   };
 
-  const AddStarIcon = (isFull, index) => {
-    return isFull === true ? (
-      <Icon key={index} icon="mdi-light:star" width="20%" />
-    ) : (
-      <Icon key={index} icon="mdi-light:star-half" width="20%" />
+  const ShowVotes = ({ voteAverage }) => {
+    let starsBy5 = Math.round(voteAverage * 0.5 * 2) / 2;
+    const isFullStarArr = [];
+    for (let i = starsBy5; i > 0; i--) {
+      i >= 1 ? isFullStarArr.push(true) : isFullStarArr.push(false);
+    }
+    return (
+      <>
+        <div className="vote-average back">
+          {Array.from({ length: 5 }, (e, index) => (
+            <Icon key={index} icon="mdi:star" width="20%" />
+          ))}
+        </div>
+        <div className="vote-average front">
+          {isFullStarArr.map((isFull, index) =>
+            isFull ? (
+              <Icon key={index} icon="mdi:star" width="20%" />
+            ) : (
+              <Icon key={index} icon="mdi:star-half" width="20%" />
+            )
+          )}
+        </div>
+      </>
     );
   };
 
-  const StarsBack = () => {
-    return Array.from({ length: 5 }, () => (
-      <Icon icon="mdi-light:star" width="20%" />
-    ));
+  const AdditionalInfo = ({ movieDetails }) => {
+    return (
+      <>
+        <p>
+          Release date: <ReleaseDate release={movieDetails.release_date} />
+        </p>
+        <p>
+          Genres: <Genres genres={movieDetails.genres} />
+        </p>
+      </>
+    );
   };
 
-  const releaseDate = (releaseDate) => {
-    return new Date(releaseDate).toLocaleString("en-EN", {
+  const ReleaseDate = ({ release }) => {
+    return new Date(release).toLocaleString("en-EN", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
+  };
+
+  const Genres = ({ genres }) => {
+    return genres.map((genre) => genre.name).join(", ");
   };
 
   const addToWishlist = () => {
@@ -65,7 +98,7 @@ const DetailPage = () => {
   if (!movie) return <p>Loading...</p>;
 
   return (
-    <section className="detail-page">
+    <section className={`detail-page ${switchClassName()}`}>
       <h2>{movie.title}</h2>
       <h4>{movie.tagline}</h4>
       <div className="info">
@@ -74,15 +107,12 @@ const DetailPage = () => {
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
           />
-          <span className="vote-average back">{StarsBack()}</span>
-          <span className="vote-average front">
-            {stars.map((isFull, index) => AddStarIcon(isFull, index))}
-          </span>
+          <ShowVotes voteAverage={movie.vote_average} />
         </div>
 
         <div className="copy-cta">
           <p>{movie.overview}</p>
-          <p>Release date: {releaseDate(movie.release_date)}</p>
+          <AdditionalInfo movieDetails={movie} />
           <button className="cta" onClick={addToWishlist}>
             Add to Wishlist
           </button>
