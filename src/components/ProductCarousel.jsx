@@ -58,7 +58,7 @@ const ProductCarousel = ({ category }) => {
           <div className="movie" key={movie.id}>
             <Link
               className="movie-link"
-              to={`/details/${movie.id}`}
+              to={`/details/${category}/${movie.id}`}
               onClick={(e) => {
                 // No able to click when carousel is dragging or swiping
                 if (mouseState.isMoving) {
