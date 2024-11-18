@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAlert from "../hooks/useAlert";
 import { Icon } from "@iconify/react/dist/iconify.js";
 

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import useAlert from "../hooks/useAlert";
 import useLoading from "../hooks/useLoading";
+import PropTypes from "prop-types";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const POPULAR = import.meta.env.VITE_CATEGORY_POPULAR;
@@ -35,7 +36,7 @@ const DetailPage = () => {
     };
 
     fetchMovie();
-  }, [id]);
+  }, [hideLoading, id, showAlert, showLoading]);
 
   const switchClassName = () => {
     switch (category) {
@@ -76,16 +77,15 @@ const DetailPage = () => {
     );
   };
 
-  const AdditionalInfo = ({ movieDetails }) => {
+  const AdditionalInfo = ({ genres, releaseDate, productionCompanies }) => {
     return (
       <span>
-        <b>Genres:&nbsp;</b> <Genres genres={movieDetails.genres} />
+        <b>Genres:&nbsp;</b> <Genres genres={genres} />
         <br />
-        <b>Release date:&nbsp;</b>{" "}
-        <ReleaseDate release={movieDetails.release_date} />
+        <b>Release date:&nbsp;</b> <ReleaseDate release={releaseDate} />
         <br />
         <b>Production companies:&nbsp;</b>
-        <Companies companies={movieDetails.production_companies} />
+        <Companies companies={productionCompanies} />
       </span>
     );
   };
@@ -116,6 +116,16 @@ const DetailPage = () => {
     }
   };
 
+  ShowVotes.propTypes = {
+    voteAverage: PropTypes.number.isRequired,
+  };
+
+  AdditionalInfo.propTypes = {
+    genres: PropTypes.array.isRequired,
+    releaseDate: PropTypes.string.isRequired,
+    productionCompanies: PropTypes.array.isRequired,
+  };
+
   if (!movie) return null;
 
   return (
@@ -132,7 +142,11 @@ const DetailPage = () => {
         </div>
         <div className="copy-cta">
           <p>{movie.overview}</p>
-          <AdditionalInfo movieDetails={movie} />
+          <AdditionalInfo
+            genres={movie.genres}
+            releaseDate={movie.release_date}
+            productionCompanies={movie.production_companies}
+          />
           <button className="cta" onClick={addToWishlist}>
             Add to Wishlist
           </button>

@@ -1,4 +1,3 @@
-import React from "react";
 import Carousel from "../components/ProductCarousel";
 
 const POPULAR = import.meta.env.VITE_CATEGORY_POPULAR;

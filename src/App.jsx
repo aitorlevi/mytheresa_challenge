@@ -8,7 +8,9 @@ import Loading from "./components/Loading";
 
 const App = () => {
   return (
-    <BrowserRouter future={{ v7_startTransition: true }}>
+    <BrowserRouter
+      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
+    >
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />

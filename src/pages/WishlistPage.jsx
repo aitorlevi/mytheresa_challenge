@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAlert from "../hooks/useAlert";
 import useLoading from "../hooks/useLoading";
 import { Link } from "react-router-dom";
@@ -12,7 +12,7 @@ const WishlistPage = () => {
     showLoading();
     setWishlist(JSON.parse(localStorage.getItem("wishlist")) || []);
     hideLoading();
-  }, []);
+  }, [hideLoading, showLoading]);
 
   const clearWishlist = () => {
     showLoading();

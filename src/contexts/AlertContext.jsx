@@ -1,16 +1,14 @@
-import React, { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useState } from "react";
+import PropTypes from "prop-types";
 
 const AlertContext = createContext();
 
 const AlertProvider = ({ children }) => {
   const [alert, setAlert] = useState({ type: "", message: "" });
 
-  const showAlert = (type, message) => {
+  const showAlert = useCallback((type, message) => {
     setAlert({ type, message });
-    setTimeout(() => {
-      clearAlert();
-    }, 4000);
-  };
+  }, []);
 
   const clearAlert = () => {
     setAlert({ type: "", message: "" });
@@ -21,6 +19,8 @@ const AlertProvider = ({ children }) => {
     </AlertContext.Provider>
   );
 };
-
+AlertProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 export default AlertProvider;
 export { AlertContext };
