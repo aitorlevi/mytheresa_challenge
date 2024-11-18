@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import useAlert from "../hooks/useAlert";
+import useLoading from "../hooks/useLoading";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const POPULAR = import.meta.env.VITE_CATEGORY_POPULAR;
@@ -10,16 +12,26 @@ const UPCOMING = import.meta.env.VITE_CATEGORY_UPCOMING;
 const DetailPage = () => {
   const { category, id } = useParams();
   const [movie, setMovie] = useState(null);
+  const { showAlert } = useAlert();
+  const { showLoading, hideLoading } = useLoading();
 
   useEffect(() => {
-    console.log("useEffect");
     const fetchMovie = async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
-      );
-      const data = await response.json();
-
-      setMovie(data);
+      try {
+        showLoading();
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
+        );
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setMovie(data);
+      } catch (error) {
+        showAlert("error", error.message);
+      } finally {
+        hideLoading();
+      }
     };
 
     fetchMovie();
@@ -66,14 +78,15 @@ const DetailPage = () => {
 
   const AdditionalInfo = ({ movieDetails }) => {
     return (
-      <>
-        <p>
-          Release date: <ReleaseDate release={movieDetails.release_date} />
-        </p>
-        <p>
-          Genres: <Genres genres={movieDetails.genres} />
-        </p>
-      </>
+      <span>
+        <b>Genres:&nbsp;</b> <Genres genres={movieDetails.genres} />
+        <br />
+        <b>Release date:&nbsp;</b>{" "}
+        <ReleaseDate release={movieDetails.release_date} />
+        <br />
+        <b>Production companies:&nbsp;</b>
+        <Companies companies={movieDetails.production_companies} />
+      </span>
     );
   };
 
@@ -87,6 +100,10 @@ const DetailPage = () => {
 
   const Genres = ({ genres }) => {
     return genres.map((genre) => genre.name).join(", ");
+  };
+
+  const Companies = ({ companies }) => {
+    return companies.map((companies) => companies.name).join(", ");
   };
 
   const addToWishlist = () => {
@@ -104,12 +121,11 @@ const DetailPage = () => {
       <div className="info">
         <div className="image-vote">
           <img
-            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
             alt={movie.title}
           />
           <ShowVotes voteAverage={movie.vote_average} />
         </div>
-
         <div className="copy-cta">
           <p>{movie.overview}</p>
           <AdditionalInfo movieDetails={movie} />

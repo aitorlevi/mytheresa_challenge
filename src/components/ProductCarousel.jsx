@@ -1,22 +1,35 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Icon } from "@iconify/react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import useAlert from "../hooks/useAlert";
+import useLoading from "../hooks/useLoading";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 const ProductCarousel = ({ category }) => {
   const [movies, setMovies] = useState([]);
   const [mouseState, setMouseState] = useState({ isMoving: false });
+  const { showAlert } = useAlert();
+  const { showLoading, hideLoading } = useLoading();
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/movie/${category}?api_key=${API_KEY}`
-      );
-      const data = await response.json();
-      setMovies(data.results);
+      try {
+        showLoading();
+        const response = await fetch(
+          `https://api.themoviedb.org/3/movie/${category}?api_key=${API_KEY}`
+        );
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setMovies(data.results);
+      } catch (error) {
+        showAlert("error", error.message);
+      } finally {
+        hideLoading();
+      }
     };
 
     fetchMovies();

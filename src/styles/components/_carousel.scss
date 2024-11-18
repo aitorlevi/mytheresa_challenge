@@ -4,13 +4,13 @@
 .carousel {
   .carousel-wrapper {
     .movie {
-      margin: 0 variables.$spacing_sm;
+      margin: 0 variables.$spacing-sm;
       .movie-link {
         img {
           width: 100%;
         }
         h4 {
-          padding-top: variables.$spacing_sm;
+          padding-top: variables.$spacing-sm;
           text-align: center;
         }
       }

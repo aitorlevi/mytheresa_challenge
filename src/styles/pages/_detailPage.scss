@@ -1,16 +1,17 @@
 @use "../variables";
+@use "../mixins";
 
 .detail-page {
   h2 {
-    margin-bottom: variables.$spacing_sm;
+    margin-bottom: variables.$spacing-sm;
   }
   h4 {
-    margin-bottom: variables.$spacing_md;
+    margin-bottom: variables.$spacing-md;
   }
   .info {
     display: flex;
     flex-direction: column;
-    gap: variables.$spacing_lg;
+    gap: variables.$spacing-lg;
     align-items: stretch;
 
     .image-vote {
@@ -27,7 +28,7 @@
         left: 50%;
         bottom: 0;
         z-index: 1;
-        padding: 10px;
+        padding: 5px;
         border-radius: 0 8px 0 0;
 
         &.back {
@@ -43,22 +44,56 @@
     .copy-cta {
       display: flex;
       flex-direction: column;
-      gap: variables.$spacing_lg;
+      gap: variables.$spacing-lg;
 
       .cta {
         width: 50%;
         margin: 0 auto;
       }
     }
+    @include mixins.responsive(variables.$breakpoint-md) {
+      flex-direction: row;
+      & > * {
+        flex: 1 100%;
+      }
+      .image-vote {
+        max-width: 400px;
+      }
+    }
   }
-}
 
-.popular {
-  color: green;
-}
-.top-rated {
-  color: red;
-}
-.upcoming {
-  color: blue;
+  &.popular {
+    font-family: variables.$font-family-popular;
+    .cta {
+      background-color: variables.$popular-color;
+      &:hover {
+        background-color: variables.$popular-color-hover;
+        box-shadow: 0px 0px 5px 3px variables.$popular-color-hover;
+      }
+    }
+  }
+  &.top-rated {
+    font-family: variables.$font-family-top-rated;
+    .cta {
+      background-color: variables.$top-rated-color;
+      border: 5px solid variables.$black-color;
+
+      &:hover {
+        background-color: variables.$top-rated-color;
+        border: 5px solid transparent;
+        box-shadow: 0px 0px 5px 3px variables.$black-color;
+      }
+    }
+  }
+  &.upcoming {
+    font-family: variables.$font-family-upcoming;
+    .cta {
+      background-color: variables.$upcoming-color;
+      padding: 20px;
+      border-radius: 25px;
+      &:hover {
+        background-color: variables.$upcoming-color-hover;
+      }
+    }
+  }
 }
