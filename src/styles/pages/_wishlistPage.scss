@@ -1,0 +1,47 @@
+@use "../variables";
+@use "../mixins";
+
+.wishlist {
+  .title-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: variables.$spacing-max-width;
+    margin: 0 auto;
+    .movie {
+      padding: variables.$spacing-sm;
+      margin: variables.$spacing-md 0;
+      width: 100%;
+      background-color: variables.$white-color;
+      border: 1px solid rgba(variables.$black-color, 0.3);
+      border-radius: variables.$border-radius;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(variables.$black-color, 0.1);
+      img {
+        display: block;
+        width: 100%;
+        border-radius: variables.$border-radius;
+      }
+      h4 {
+        padding-top: variables.$spacing-sm;
+      }
+      @include mixins.responsive(variables.$breakpoint-sm) {
+        flex: 1 1 calc(50% - variables.$spacing-md);
+        max-width: calc(50% - variables.$spacing-md);
+        margin: variables.$spacing-md variables.$spacing-sm;
+      }
+      @include mixins.responsive(variables.$breakpoint-md) {
+        flex: 1 1 calc(33% - variables.$spacing-md);
+        max-width: calc(33% - variables.$spacing-md);
+      }
+    }
+  }
+  //   .cta {
+  //     display: block;
+  //     margin: variables.$spacing-md auto;
+  //   }
+}

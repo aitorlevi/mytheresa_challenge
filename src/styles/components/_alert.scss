@@ -1,0 +1,60 @@
+@use "../variables";
+
+.alert-container {
+  position: fixed;
+  top: 1%;
+  right: 1%;
+  z-index: -10;
+  display: flex;
+  justify-content: center;
+  margin: variables.$spacing-md;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity variables.$transition-time-slow ease,
+    transform variables.$transition-time-slow ease,
+    z-index variables.$transition-time-slow ease;
+
+  &.show {
+    z-index: 990;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.alert {
+  color: variables.$black-color;
+  padding: variables.$spacing-md variables.$spacing-xl variables.$spacing-md
+    variables.$spacing-md;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid variables.$black-color;
+  box-shadow: 0 4px 6px rgba(variables.$white-color, 0.2);
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  .closeButton {
+    background-color: transparent;
+    color: variables.$black-color;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transition-duration: variables.$transition-time-fast;
+    &:hover {
+      font-size: 1.7rem;
+    }
+  }
+
+  &.success {
+    background-color: #ddffdd;
+  }
+  &.warning {
+    background-color: #ffffcc;
+  }
+  &.error {
+    background-color: #ffdddd;
+  }
+}

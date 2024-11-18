@@ -108,11 +108,15 @@ const DetailPage = () => {
 
   const addToWishlist = () => {
     const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    localStorage.setItem("wishlist", JSON.stringify([...wishlist, movie]));
-    alert(`${movie.title} added to wishlist!`);
+    if (!wishlist.some((item) => item.id === movie.id)) {
+      localStorage.setItem("wishlist", JSON.stringify([...wishlist, movie]));
+      showAlert("success", `${movie.title} added to wishlist!`);
+    } else {
+      showAlert("warning", `${movie.title} is already added in the wishlist!`);
+    }
   };
 
-  if (!movie) return <p>Loading...</p>;
+  if (!movie) return null;
 
   return (
     <section className={`detail-page ${switchClassName()}`}>

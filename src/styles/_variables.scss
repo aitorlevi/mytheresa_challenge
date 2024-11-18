@@ -27,10 +27,15 @@ $spacing-sm: 8px;
 $spacing-md: 16px;
 $spacing-lg: 32px;
 $spacing-xl: 64px;
+$spacing-max-width: 1064px;
 
 // Breakpoints
 $breakpoint-sm: 600px;
 $breakpoint-md: 768px;
 
 // Transitions
-$transition-duration-fast: 0.2s;
+$transition-time-fast: 0.2s;
+$transition-time-slow: 0.4s;
+
+// Utils
+$border-radius: 8px;

@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useLoading from "../hooks/useLoading";
 
 const Loading = () => {
   const { isLoading } = useLoading();
+  const [isVisible, setIsVisible] = useState(false);
 
-  if (!isLoading) return null;
+  useEffect(() => {
+    if (isLoading) {
+      setIsVisible(true);
+    } else {
+      const timeout = setTimeout(() => setIsVisible(false), 200);
+      return () => clearTimeout(timeout);
+    }
+  }, [isLoading]);
 
   return (
-    <div className="overlay">
-      <div className="spinner"></div>
-    </div>
+    isVisible && (
+      <div className={`overlay ${isLoading ? "fade-in" : "fade-out"}`}>
+        <div className="spinner"></div>
+      </div>
+    )
   );
 };
 
