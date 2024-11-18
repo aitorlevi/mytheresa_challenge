@@ -6,11 +6,18 @@
   align-items: center;
 }
 
-@mixin container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
+@mixin positionCustom(
+  $position: absolute,
+  $top: null,
+  $right: null,
+  $bottom: null,
+  $left: null
+) {
+  position: $position;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
 }
 
 @mixin responsive($breakpoint) {

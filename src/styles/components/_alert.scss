@@ -1,12 +1,10 @@
 @use "../variables";
+@use "../mixins";
 
 .alert-container {
-  position: fixed;
-  top: 1%;
-  right: 1%;
+  @include mixins.positionCustom(absolute, 1%, 1%);
   z-index: -10;
-  display: flex;
-  justify-content: center;
+  @include mixins.flex-center;
   margin: variables.$spacing-md;
   opacity: 0;
   transform: translateY(-20px);
@@ -26,11 +24,10 @@
   padding: variables.$spacing-md variables.$spacing-xl variables.$spacing-md
     variables.$spacing-md;
   font-size: 1rem;
-  border-radius: 5px;
+  border-radius: variables.$border-radius;
   border: 1px solid variables.$black-color;
-  box-shadow: 0 4px 6px rgba(variables.$white-color, 0.2);
-  display: flex;
-  align-items: center;
+  box-shadow: variables.$box-shadow-size rgba(variables.$black-color, 0.2);
+  @include mixins.flex-center;
   position: relative;
 
   .closeButton {
@@ -39,22 +36,17 @@
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
-    position: absolute;
-    top: 0;
-    right: 0;
+    @include mixins.positionCustom(absolute, 0, 0);
     transition-duration: variables.$transition-time-fast;
-    &:hover {
-      font-size: 1.7rem;
-    }
   }
 
   &.success {
-    background-color: #ddffdd;
+    background-color: variables.$alert-success-color;
   }
   &.warning {
-    background-color: #ffffcc;
+    background-color: variables.$alert-warning-color;
   }
   &.error {
-    background-color: #ffdddd;
+    background-color: variables.$alert-error-color;
   }
 }

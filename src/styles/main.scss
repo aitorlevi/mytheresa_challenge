@@ -14,13 +14,8 @@
   padding: 0;
   box-sizing: border-box;
   letter-spacing: 1px;
-
   -webkit-tap-highlight-color: transparent;
   outline: none;
-}
-
-html {
-  font-size: 100%;
 }
 
 body {
@@ -54,12 +49,17 @@ a {
 }
 
 .cta {
-  padding: 10px 20px;
+  padding: variables.$spacing-sm variables.$spacing-md;
   background-color: variables.$accent-color;
   color: variables.$white-color;
   text-transform: uppercase;
-  border-radius: 5px;
+  border-radius: variables.$border-radius;
   border: none;
   cursor: pointer;
   transition-duration: variables.$transition-time-fast;
+  border: 1px solid variables.$text-color;
+
+  &:hover {
+    box-shadow: variables.$box-shadow-size variables.$text-color;
+  }
 }

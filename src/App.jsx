@@ -8,11 +8,11 @@ import Loading from "./components/Loading";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true }}>
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/details/:category/:id" element={<DetailPage />} />
+        <Route path="/details/:id/:category?" element={<DetailPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
       </Routes>
       <Alert />

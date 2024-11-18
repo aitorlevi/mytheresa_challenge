@@ -20,7 +20,7 @@
       border: 1px solid rgba(variables.$black-color, 0.3);
       border-radius: variables.$border-radius;
       text-align: center;
-      box-shadow: 0 4px 8px rgba(variables.$black-color, 0.1);
+      box-shadow: variables.$box-shadow-size rgba(variables.$black-color, 0.1);
       img {
         display: block;
         width: 100%;
@@ -40,8 +40,4 @@
       }
     }
   }
-  //   .cta {
-  //     display: block;
-  //     margin: variables.$spacing-md auto;
-  //   }
 }

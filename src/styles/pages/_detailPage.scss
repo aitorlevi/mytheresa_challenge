@@ -22,21 +22,18 @@
         display: block;
       }
       .vote-average {
-        position: absolute;
+        @include mixins.positionCustom(absolute, null, null, 0, 50%);
         display: flex;
         width: 50%;
-        left: 50%;
-        bottom: 0;
         z-index: 10;
-        padding: 5px;
-        border-radius: 0 8px 0 0;
+        padding: variables.$spacing-xs;
 
         &.back {
-          color: #ffffff85;
-          background-color: #00000050;
+          color: rgba(variables.$white-color, 0.4);
+          background-color: rgba(variables.$black-color, 0.4);
         }
         &.front {
-          color: #ffd700;
+          color: variables.$gold-color;
         }
       }
     }
@@ -68,6 +65,7 @@
     }
   }
 
+  // Different styles depending on category
   &.popular {
     font-family: variables.$font-family-popular;
     .cta {

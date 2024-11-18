@@ -1,19 +1,16 @@
 @use "../variables";
+@use "../mixins";
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
+  @include mixins.positionCustom(fixed, 0, null, null, 0);
+  @include mixins.flex-center;
   width: 100vw;
   height: 100vh;
   background: rgba(variables.$background-color, 1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 1000;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease;
+  transition: opacity variables.$transition-time-fast ease;
 
   &.fade-in {
     opacity: 1;
@@ -27,10 +24,10 @@
 }
 
 .spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid rgba(variables.$black-color, 0.3);
-  border-top: 5px solid variables.$black-color;
+  width: variables.$spacing-xl;
+  height: variables.$spacing-xl;
+  border: variables.$spacing-xs solid rgba(variables.$black-color, 0.3);
+  border-top: variables.$spacing-xs solid variables.$black-color;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

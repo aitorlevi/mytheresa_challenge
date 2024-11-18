@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAlert from "../hooks/useAlert";
 import useLoading from "../hooks/useLoading";
+import { Link } from "react-router-dom";
 
 const WishlistPage = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -37,11 +38,13 @@ const WishlistPage = () => {
           <div className="container">
             {wishlist.map((movie) => (
               <div key={movie.id} className="movie">
-                <img
-                  src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
-                  alt={movie.title}
-                />
-                <h4>{movie.title}</h4>
+                <Link to={`/details/${movie.id}`}>
+                  <img
+                    src={`https://image.tmdb.org/t/p/w400${movie.poster_path}`}
+                    alt={movie.title}
+                  />
+                  <h4>{movie.title}</h4>
+                </Link>
               </div>
             ))}
           </div>

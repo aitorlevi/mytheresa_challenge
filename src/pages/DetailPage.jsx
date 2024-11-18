@@ -10,7 +10,7 @@ const TOP_RATED = import.meta.env.VITE_CATEGORY_TOP_RATED;
 const UPCOMING = import.meta.env.VITE_CATEGORY_UPCOMING;
 
 const DetailPage = () => {
-  const { category, id } = useParams();
+  const { id, category } = useParams();
   const [movie, setMovie] = useState(null);
   const { showAlert } = useAlert();
   const { showLoading, hideLoading } = useLoading();
@@ -119,7 +119,7 @@ const DetailPage = () => {
   if (!movie) return null;
 
   return (
-    <section className={`detail-page ${switchClassName()}`}>
+    <section className={`detail-page  ${category && switchClassName()}`}>
       <h2>{movie.title}</h2>
       <h4>{movie.tagline}</h4>
       <div className="info">
