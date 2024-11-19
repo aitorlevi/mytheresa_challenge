@@ -107,6 +107,7 @@ const Carousel = ({ category }) => {
               className="movie-link"
               to={`/details/${movie.id}/${category}`}
               draggable="false"
+              aria-hidden="true"
               onClick={(e) => {
                 // Prevent link click during carousel movement
                 if (mouseState.isMoving) {
@@ -116,7 +117,6 @@ const Carousel = ({ category }) => {
             >
               <img
                 src={`https://image.tmdb.org/t/p/w300${movie.backdrop_path}`}
-                alt={movie.title}
                 draggable="false"
               />
               <h4>{movie.title}</h4>
