@@ -2,7 +2,7 @@
 @use "../mixins";
 
 .alert-container {
-  @include mixins.positionCustom(absolute, 1%, 1%);
+  @include mixins.positionCustom(fixed, 1%, 1%);
   z-index: -10;
   @include mixins.flex-center;
   margin: variables.$spacing-md;
