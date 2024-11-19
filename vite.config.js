@@ -10,5 +10,10 @@ export default defineConfig({
         api: "modern-compiler",
       },
     },
+    postcss: {
+      options: {
+        exclude: /node_modules/,
+      },
+    },
   },
 });

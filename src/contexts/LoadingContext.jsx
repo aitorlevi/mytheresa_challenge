@@ -11,9 +11,7 @@ const LoadingProvider = ({ children }) => {
   }, []);
 
   const hideLoading = useCallback(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
+    setIsLoading(false);
   }, []);
 
   return (

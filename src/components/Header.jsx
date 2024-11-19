@@ -12,9 +12,9 @@ const Header = () => {
           </span>
         </Link>
       </nav>
-      <Link to={`/`}>
-        <h1>MYTHERESA CHALLENGE</h1>
-      </Link>
+      <h1>
+        <Link to={`/`}>MYTHERESA CHALLENGE</Link>
+      </h1>
     </header>
   );
 };

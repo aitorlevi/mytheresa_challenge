@@ -10,9 +10,10 @@ const AlertProvider = ({ children }) => {
     setAlert({ type, message });
   }, []);
 
-  const clearAlert = () => {
+  const clearAlert = useCallback(() => {
     setAlert({ type: "", message: "" });
-  };
+  }, []);
+
   return (
     <AlertContext.Provider value={{ alert, showAlert, clearAlert }}>
       {children}

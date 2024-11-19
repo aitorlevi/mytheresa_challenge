@@ -9,6 +9,7 @@ const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const POPULAR = import.meta.env.VITE_CATEGORY_POPULAR;
 const TOP_RATED = import.meta.env.VITE_CATEGORY_TOP_RATED;
 const UPCOMING = import.meta.env.VITE_CATEGORY_UPCOMING;
+const ERROR_MESSAGE = import.meta.env.VITE_ERROR_MESSAGE;
 
 const DetailPage = () => {
   const { id, category } = useParams();
@@ -24,10 +25,15 @@ const DetailPage = () => {
           `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
         );
         if (!response.ok) {
-          throw new Error(`Error ${response.status}: ${response.statusText}`);
+          throw new Error(
+            `Error ${response.status}: ${
+              response.statusText ? response.statusText : ERROR_MESSAGE
+            }`
+          );
+        } else {
+          const data = await response.json();
+          setMovie(data);
         }
-        const data = await response.json();
-        setMovie(data);
       } catch (error) {
         showAlert("error", error.message);
       } finally {
@@ -127,7 +133,6 @@ const DetailPage = () => {
   };
 
   if (!movie) return null;
-
   return (
     <section className={`detail-page  ${category && switchClassName()}`}>
       <h2>{movie.title}</h2>

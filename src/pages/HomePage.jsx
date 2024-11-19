@@ -1,4 +1,4 @@
-import Carousel from "../components/ProductCarousel";
+import Carousel from "../components/Carousel";
 
 const POPULAR = import.meta.env.VITE_CATEGORY_POPULAR;
 const TOP_RATED = import.meta.env.VITE_CATEGORY_TOP_RATED;

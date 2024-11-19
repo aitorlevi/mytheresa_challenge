@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Carousel from "react-multi-carousel";
+import MultiCarousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import useAlert from "../hooks/useAlert";
 import useLoading from "../hooks/useLoading";
 import PropTypes from "prop-types";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const ERROR_MESSAGE = import.meta.env.VITE_ERROR_MESSAGE;
 
-const ProductCarousel = ({ category }) => {
+const Carousel = ({ category }) => {
   const [movies, setMovies] = useState([]);
   const [mouseState, setMouseState] = useState({ isMoving: false });
   const { showAlert } = useAlert();
@@ -22,10 +23,15 @@ const ProductCarousel = ({ category }) => {
           `https://api.themoviedb.org/3/movie/${category}?api_key=${API_KEY}`
         );
         if (!response.ok) {
-          throw new Error(`Error ${response.status}: ${response.statusText}`);
+          throw new Error(
+            `Error ${response.status}: ${
+              response.statusText ? response.statusText : ERROR_MESSAGE
+            }`
+          );
+        } else {
+          const data = await response.json();
+          setMovies(data.results);
         }
-        const data = await response.json();
-        setMovies(data.results);
       } catch (error) {
         showAlert("error", error.message);
       } finally {
@@ -34,7 +40,7 @@ const ProductCarousel = ({ category }) => {
     };
 
     fetchMovies();
-  }, [category]);
+  }, [category, hideLoading, showAlert, showLoading]);
 
   const responsive = {
     desktop: {
@@ -55,11 +61,11 @@ const ProductCarousel = ({ category }) => {
       partialVisibilityGutter: 20,
     },
   };
-
+  if (!movies.length) return null;
   return (
     <section className="carousel">
       <h2>{category.replace("_", " ").toUpperCase()}</h2>
-      <Carousel
+      <MultiCarousel
         beforeChange={() => setMouseState({ isMoving: true })}
         afterChange={() => setMouseState({ isMoving: false })}
         responsive={responsive}
@@ -90,11 +96,11 @@ const ProductCarousel = ({ category }) => {
             </Link>
           </div>
         ))}
-      </Carousel>
+      </MultiCarousel>
     </section>
   );
 };
-ProductCarousel.propTypes = {
+Carousel.propTypes = {
   category: PropTypes.string.isRequired,
 };
-export default ProductCarousel;
+export default Carousel;
