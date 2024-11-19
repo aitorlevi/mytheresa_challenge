@@ -4,6 +4,13 @@ const POPULAR = import.meta.env.VITE_CATEGORY_POPULAR;
 const TOP_RATED = import.meta.env.VITE_CATEGORY_TOP_RATED;
 const UPCOMING = import.meta.env.VITE_CATEGORY_UPCOMING;
 
+/**
+ * HomePage component displaying movie carousels
+ *
+ * @component
+ * @description Renders carousels for popular, top-rated, and upcoming movies
+ * @returns {JSX.Element} Carousels for different movie categories
+ */
 const HomePage = () => {
   return (
     <>

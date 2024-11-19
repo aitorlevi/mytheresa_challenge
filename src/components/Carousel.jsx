@@ -9,12 +9,28 @@ import PropTypes from "prop-types";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const ERROR_MESSAGE = import.meta.env.VITE_ERROR_MESSAGE;
 
+/**
+ * Carousel component for displaying movie collections from TMDB
+ *
+ * @component
+ * @description Fetches and renders a responsive carousel of movies based on a specific category
+ * @param {Object} props - Component properties
+ * @param {string} props.category - Movie category to fetch (e.g., 'popular', 'top_rated')
+ * @returns {JSX.Element|null} Rendered carousel or null if no movies
+ */
 const Carousel = ({ category }) => {
   const [movies, setMovies] = useState([]);
   const [mouseState, setMouseState] = useState({ isMoving: false });
   const { showAlert } = useAlert();
   const { showLoading, hideLoading } = useLoading();
 
+  /**
+   * Fetches movies for the specified category from TMDB API
+   *
+   * @effect
+   * @description Retrieves movie data, handles loading and error states
+   * @dependency [category] - Refetches movies when category changes
+   */
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -22,6 +38,8 @@ const Carousel = ({ category }) => {
         const response = await fetch(
           `https://api.themoviedb.org/3/movie/${category}?api_key=${API_KEY}`
         );
+
+        // Handle API response errors
         if (!response.ok) {
           throw new Error(
             `Error ${response.status}: ${
@@ -42,6 +60,12 @@ const Carousel = ({ category }) => {
     fetchMovies();
   }, [category, hideLoading, showAlert, showLoading]);
 
+  /**
+   * Responsive configuration for multi-carousel
+   * Defines breakpoints and items to show per device type
+   *
+   * @type {Object}
+   */
   const responsive = {
     desktop: {
       breakpoint: { min: 768, max: 5000 },
@@ -61,7 +85,10 @@ const Carousel = ({ category }) => {
       partialVisibilityGutter: 20,
     },
   };
+
+  // Don't render if no movies are available
   if (!movies.length) return null;
+
   return (
     <section className="carousel">
       <h2>{category.replace("_", " ").toUpperCase()}</h2>
@@ -81,7 +108,7 @@ const Carousel = ({ category }) => {
               to={`/details/${movie.id}/${category}`}
               draggable="false"
               onClick={(e) => {
-                // No able to click when carousel is dragging or swiping
+                // Prevent link click during carousel movement
                 if (mouseState.isMoving) {
                   e.preventDefault();
                 }
@@ -100,6 +127,7 @@ const Carousel = ({ category }) => {
     </section>
   );
 };
+
 Carousel.propTypes = {
   category: PropTypes.string.isRequired,
 };

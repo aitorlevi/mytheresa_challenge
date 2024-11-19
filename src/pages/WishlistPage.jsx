@@ -3,17 +3,37 @@ import useAlert from "../hooks/useAlert";
 import useLoading from "../hooks/useLoading";
 import { Link } from "react-router-dom";
 
+/**
+ * WishlistPage Component
+ *
+ * @component
+ * @description Displays user's saved movies from local storage with clear functionality
+ * @returns {JSX.Element} Rendered wishlist page with movies or empty state
+ */
 const WishlistPage = () => {
   const [wishlist, setWishlist] = useState([]);
   const { showAlert } = useAlert();
   const { showLoading, hideLoading } = useLoading();
 
+  /**
+   * Retrieves wishlist from local storage on component mount
+   *
+   * @effect
+   * @description Loads saved wishlist items or initializes empty array
+   * @dependency [hideLoading, showLoading] - Ensures loading states are managed
+   */
   useEffect(() => {
     showLoading();
     setWishlist(JSON.parse(localStorage.getItem("wishlist")) || []);
     hideLoading();
   }, [hideLoading, showLoading]);
 
+  /**
+   * Clears entire wishlist from local storage
+   *
+   * @method
+   * @description Removes all saved movies and updates UI
+   */
   const clearWishlist = () => {
     showLoading();
     localStorage.clear();

@@ -11,12 +11,26 @@ const TOP_RATED = import.meta.env.VITE_CATEGORY_TOP_RATED;
 const UPCOMING = import.meta.env.VITE_CATEGORY_UPCOMING;
 const ERROR_MESSAGE = import.meta.env.VITE_ERROR_MESSAGE;
 
+/**
+ * DetailPage component for displaying comprehensive movie information
+ *
+ * @component
+ * @description Fetches and renders detailed movie information from TMDB API
+ * @returns {JSX.Element|null} Detailed movie view or null if data not loaded
+ */
 const DetailPage = () => {
   const { id, category } = useParams();
   const [movie, setMovie] = useState(null);
   const { showAlert } = useAlert();
   const { showLoading, hideLoading } = useLoading();
 
+  /**
+   * Fetches detailed movie information from TMDB API
+   *
+   * @effect
+   * @description Retrieves movie details, manages loading and error states
+   * @dependency [id] - Refetches movie when ID changes
+   */
   useEffect(() => {
     const fetchMovie = async () => {
       try {
@@ -44,6 +58,13 @@ const DetailPage = () => {
     fetchMovie();
   }, [hideLoading, id, showAlert, showLoading]);
 
+  /**
+   * Determines CSS class based on movie category
+   *
+   * @function
+   * @description Maps category to specific styling class
+   * @returns {string} CSS class name for the current category
+   */
   const switchClassName = () => {
     switch (category) {
       case POPULAR:
@@ -55,6 +76,14 @@ const DetailPage = () => {
     }
   };
 
+  /**
+   * Renders star rating based on vote average
+   *
+   * @component
+   * @param {Object} props - Component properties
+   * @param {number} props.voteAverage - Average vote score
+   * @returns {JSX.Element} Star rating visualization
+   */
   const ShowVotes = ({ voteAverage }) => {
     let starsBy5 = Math.round(voteAverage * 0.5 * 2) / 2;
     const isFullStarArr = [];
@@ -81,6 +110,13 @@ const DetailPage = () => {
     );
   };
 
+  /**
+   * Renders additional movie information
+   *
+   * @component
+   * @param {Object} props - Component properties
+   * @returns {JSX.Element} Additional movie details
+   */
   const AdditionalInfo = ({ genres, releaseDate, productionCompanies }) => {
     return (
       <span>
@@ -94,6 +130,13 @@ const DetailPage = () => {
     );
   };
 
+  /**
+   * Formats release date
+   *
+   * @function
+   * @param {Object} props - Component properties
+   * @returns {string} Formatted date string
+   */
   const ReleaseDate = ({ release }) => {
     return new Date(release).toLocaleString("en-EN", {
       year: "numeric",
@@ -102,14 +145,34 @@ const DetailPage = () => {
     });
   };
 
+  /**
+   * Renders comma-separated genres
+   *
+   * @function
+   * @param {Object} props - Component properties
+   * @returns {string} Comma-separated genre names
+   */
   const Genres = ({ genres }) => {
     return genres.map((genre) => genre.name).join(", ");
   };
 
+  /**
+   * Renders comma-separated production companies
+   *
+   * @function
+   * @param {Object} props - Component properties
+   * @returns {string} Comma-separated company names
+   */
   const Companies = ({ companies }) => {
     return companies.map((companies) => companies.name).join(", ");
   };
 
+  /**
+   * Adds movie to local storage wishlist
+   *
+   * @function
+   * @description Manages wishlist addition with duplicate prevention
+   */
   const addToWishlist = () => {
     const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     if (!wishlist.some((item) => item.id === movie.id)) {
@@ -130,7 +193,9 @@ const DetailPage = () => {
     productionCompanies: PropTypes.array.isRequired,
   };
 
+  // Render nothing if movie data is not loaded
   if (!movie) return null;
+
   return (
     <section className={`detail-page  ${category && switchClassName()}`}>
       <h2>{movie.title}</h2>

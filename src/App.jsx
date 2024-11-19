@@ -6,6 +6,13 @@ import Header from "./components/Header";
 import Alert from "./components/Alert";
 import Loading from "./components/Loading";
 
+/**
+ * Main Application Router Component
+ *
+ * @component
+ * @description Configures application routing and global layout components
+ * @returns {JSX.Element} Configured React Router application structure
+ */
 const App = () => {
   return (
     <BrowserRouter
