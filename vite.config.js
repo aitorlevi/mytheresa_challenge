@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import { coverageConfigDefaults } from "vitest/config";
 import react from "@vitejs/plugin-react";
+import autoprefixer from "autoprefixer";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -12,6 +13,7 @@ export default defineConfig({
       },
     },
     postcss: {
+      plugins: [autoprefixer({})],
       options: {
         exclude: /node_modules/,
       },
@@ -24,7 +26,6 @@ export default defineConfig({
     coverage: {
       exclude: [
         ...coverageConfigDefaults.exclude,
-        "./postcss.config.js",
         "./src/App.jsx",
         "./src/main.jsx",
       ],
