@@ -52,8 +52,6 @@ const DetailPage = () => {
         return "top-rated";
       case UPCOMING:
         return "upcoming";
-      default:
-        break;
     }
   };
 

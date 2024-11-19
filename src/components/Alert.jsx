@@ -9,10 +9,10 @@ const Alert = () => {
   useEffect(() => {
     if (alert.message) {
       setIsVisible(true);
-      let timer = setTimeout(() => {
+      let timeout = setTimeout(() => {
         setIsVisible(false);
       }, 3000);
-      return () => clearTimeout(timer);
+      return () => clearTimeout(timeout);
     }
   }, [alert]);
 
@@ -22,7 +22,7 @@ const Alert = () => {
     <div className={`alert-container ${isVisible && "show"}`}>
       <div className={`alert ${alert.type}`}>
         <span>{alert.message}</span>
-        <button className="closeButton" onClick={clearAlert}>
+        <button className="close-button" onClick={clearAlert}>
           <Icon icon="mdi:close" />
         </button>
       </div>

@@ -30,7 +30,7 @@
   @include mixins.flex-center;
   position: relative;
 
-  .closeButton {
+  .close-button {
     background-color: transparent;
     color: variables.$black-color;
     border: none;

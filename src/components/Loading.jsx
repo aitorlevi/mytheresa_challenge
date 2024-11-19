@@ -9,7 +9,7 @@ const Loading = () => {
     if (isLoading) {
       setIsVisible(true);
     } else {
-      const timeout = setTimeout(() => setIsVisible(false), 200);
+      let timeout = setTimeout(() => setIsVisible(false), 500);
       return () => clearTimeout(timeout);
     }
   }, [isLoading]);
