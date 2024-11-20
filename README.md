@@ -22,6 +22,7 @@ Environment variables (create .env file in the root directory):
 
 There are still a few changes to do:
 
+- Add SSR support
 - Control error url page
 - Use Context API to control de wishlist.
 - Better customization of error messages
